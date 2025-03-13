@@ -59,7 +59,8 @@ class VolunteerResource extends Resource
                             Faculty::FKIP->value => Faculty::FKIP->value,
                         ])
                         ->reactive()
-                        ->required(),
+                        ->required()
+                        ->afterStateUpdated(fn (callable $set) => $set('major', null)),
 
                     Select::make('major')
                         ->options(fn (callable $get) => match ($get('faculty')) {
@@ -116,6 +117,7 @@ class VolunteerResource extends Resource
                             ],
                             default => [],
                         })
+                        ->default(fn (callable $get) => $get('major'))
                         ->required(),
 
                     Select::make('blood_type')
