@@ -4,26 +4,23 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Library;
 use Filament\Forms\Form;
+use App\Models\Organizer;
 use Filament\Tables\Table;
-use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\DateTimePicker;
-use App\Filament\Resources\LibraryResource\Pages;
+use App\Filament\Resources\OrganizerResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\LibraryResource\RelationManagers;
+use App\Filament\Resources\OrganizerResource\RelationManagers;
 
-class LibraryResource extends Resource
+class OrganizerResource extends Resource
 {
-    protected static ?string $model = Library::class;
+    protected static ?string $model = Organizer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -33,18 +30,17 @@ class LibraryResource extends Resource
         ->schema([
             Section::make('Main Content')->schema(
                 [
-                    TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                    FileUpload::make('file')
-                        ->directory('posts/documents') // Simpan di folder khusus PDF
-                        ->acceptedFileTypes(['application/pdf']) // Hanya menerima PDF
-                        ->required(),
-                    DateTimePicker::make('published_at')->nullable(),
-                    Select::make('user_id')
-                        ->relationship('author', 'name')
-                        ->searchable()
-                        ->required(),
+                    FileUpload::make('image')->image()->directory('member/organizers'),
+                    TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                    TextInput::make('member_id')
+                            ->required()
+                            ->maxLength(255),
+                    TextInput::make('position')
+                            ->required()
+                            ->maxLength(255),
+                
                 ]
             )->columns(1)
         ]);
@@ -54,9 +50,10 @@ class LibraryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')->sortable()->searchable(),
-                TextColumn::make('author.name')->sortable()->searchable(),
-                TextColumn::make('published_at')->date('Y-m-d')->sortable()->searchable(),
+                ImageColumn::make('image'),
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('member_id')->sortable()->searchable(),
+                TextColumn::make('position')->sortable()->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -89,9 +86,9 @@ class LibraryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLibraries::route('/'),
-            'create' => Pages\CreateLibrary::route('/create'),
-            'edit' => Pages\EditLibrary::route('/{record}/edit'),
+            'index' => Pages\ListOrganizers::route('/'),
+            'create' => Pages\CreateOrganizer::route('/create'),
+            'edit' => Pages\EditOrganizer::route('/{record}/edit'),
         ];
     }
 }
