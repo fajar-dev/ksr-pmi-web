@@ -18,5 +18,6 @@ class Slider extends Model
         'title',
         'description',
         'featured',
+        'order',
     ];
 }

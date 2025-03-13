@@ -40,7 +40,6 @@ class OrganizerResource extends Resource
                     TextInput::make('position')
                             ->required()
                             ->maxLength(255),
-                
                 ]
             )->columns(1)
         ]);

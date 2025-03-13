@@ -19,6 +19,7 @@ use Filament\Tables\Columns\CheckboxColumn;
 use App\Filament\Resources\SliderResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SliderResource\RelationManagers;
+use Filament\Tables\Columns\TextInputColumn;
 
 class SliderResource extends Resource
 {
@@ -43,6 +44,11 @@ class SliderResource extends Resource
                     TextInput::make('description')
                             ->required()
                             ->maxLength(255),
+                    TextInput::make('order')
+                            ->numeric()
+                            ->default(1)
+                            ->required()
+                            ->label('Order'),
                     Checkbox::make('featured')->default(true),
                 ]
             )->columns(1)
@@ -56,6 +62,10 @@ class SliderResource extends Resource
                 ImageColumn::make('image'),
                 TextColumn::make('title')->sortable()->searchable(),
                 TextColumn::make('description')->sortable()->searchable(),
+                TextInputColumn::make('order')
+                ->label('Order')
+                ->sortable()
+                ->rules(['numeric', 'min:1']),
                 CheckboxColumn::make('featured'),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -66,6 +76,7 @@ class SliderResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('order')
             ->filters([
                 //
             ])
