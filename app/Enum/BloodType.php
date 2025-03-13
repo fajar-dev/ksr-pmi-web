@@ -1,14 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Enum;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-class Volunteer extends Model
+enum BloodType
 {
-    use HasFactory;
-
     const BLOOD_APOSITIVE = 'A+';
 
     const BLOOD_ANEGATIVE = 'A-';
@@ -25,7 +20,7 @@ class Volunteer extends Model
 
     const BLOOD_ONEGATIVE = 'O-';
 
-    const ROLES = [
+    const type = [
         self::BLOOD_APOSITIVE => 'A+',
         self::BLOOD_ANEGATIVE => 'A-',
         self::BLOOD_BPOSITIVE => 'B+',
@@ -34,18 +29,5 @@ class Volunteer extends Model
         self::BLOOD_ABNEGATIVE => 'AB-',
         self::BLOOD_OPOSITIVE => 'O+',
         self::BLOOD_ONEGATIVE => 'O-',
-    ];
-
-    public $timestamps = true;
-    protected $table = 'volunteers';
-    protected $primaryKey = 'id';
-
-    protected $fillable = [
-        'image',
-        'name',
-        'member_id',
-        'faculty',
-        'major',
-        'blood_type',
     ];
 }
