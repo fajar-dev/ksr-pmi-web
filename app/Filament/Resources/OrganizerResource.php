@@ -14,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\TextInputColumn;
 use App\Filament\Resources\OrganizerResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\OrganizerResource\RelationManagers;
@@ -40,6 +41,11 @@ class OrganizerResource extends Resource
                     TextInput::make('position')
                             ->required()
                             ->maxLength(255),
+                    TextInput::make('order')
+                            ->numeric()
+                            ->default(1)
+                            ->required()
+                            ->label('Order'),
                 ]
             )->columns(1)
         ]);
@@ -51,8 +57,12 @@ class OrganizerResource extends Resource
             ->columns([
                 ImageColumn::make('image'),
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('member_id')->sortable()->searchable(),
+                TextColumn::make('member_id')->label('Member ID')->sortable()->searchable(),
                 TextColumn::make('position')->sortable()->searchable(),
+                TextInputColumn::make('order')
+                    ->label('Order')
+                    ->sortable()
+                    ->rules(['numeric', 'min:1']),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

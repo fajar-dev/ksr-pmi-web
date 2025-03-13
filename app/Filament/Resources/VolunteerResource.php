@@ -46,7 +46,8 @@ class VolunteerResource extends Resource
 
                     TextInput::make('member_id')
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->label('Member ID'),
 
                     Select::make('faculty')
                         ->options([

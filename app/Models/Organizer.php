@@ -18,5 +18,6 @@ class Organizer extends Model
         'name',
         'member_id',
         'position',
+        'order'
     ];
 }
