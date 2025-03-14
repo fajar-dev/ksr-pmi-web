@@ -37,7 +37,7 @@ class VolunteerResource extends Resource
                 ->schema([
                     FileUpload::make('image')
                         ->image()
-                        ->directory('member/organizers')
+                        ->directory('member/volunteers')
                         ->required(),
 
                     TextInput::make('name')
