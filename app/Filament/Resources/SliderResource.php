@@ -63,9 +63,9 @@ class SliderResource extends Resource
                 TextColumn::make('title')->sortable()->searchable(),
                 TextColumn::make('description')->sortable()->searchable(),
                 TextInputColumn::make('order')
-                ->label('Order')
-                ->sortable()
-                ->rules(['numeric', 'min:1']),
+                    ->label('Order')
+                    ->sortable()
+                    ->rules(['numeric', 'min:1']),
                 CheckboxColumn::make('featured'),
                 TextColumn::make('created_at')
                     ->dateTime()

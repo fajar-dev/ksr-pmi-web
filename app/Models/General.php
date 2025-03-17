@@ -28,6 +28,6 @@ class General extends Model
         'vision',
         'mission',
         'history',
-        
+        'registration_url',
     ];
 }

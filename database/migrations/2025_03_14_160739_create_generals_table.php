@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('generals', function (Blueprint $table) {
             $table->id();
             $table->string('logo');
+            $table->string('favicon');
             $table->string('email');
-            $table->string('address');
             $table->string('phone');
+            $table->string('address');
             $table->string('facebook');
             $table->string('instagram');
             $table->string('linkedin');
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->string('mission');
             $table->string('vision');
             $table->string('history');
+            $table->string('registration_url');
             $table->timestamps();
         });
     }
