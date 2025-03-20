@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\PostStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->text('content');
 
             $table->timestamp('published_at')->nullable();
-            $table->boolean('featured')->default(false);
+            $table->enum('status', PostStatus::status);
 
             $table->softDeletes();
             $table->timestamps();

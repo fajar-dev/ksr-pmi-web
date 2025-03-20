@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
+use App\Enum\PostStatus;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
@@ -17,6 +18,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Columns\SelectColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Columns\CheckboxColumn;
@@ -62,7 +64,9 @@ class PostResource extends Resource
                     [
                         FileUpload::make('image')->image()->directory('posts/thumbnails'),
                         DateTimePicker::make('published_at')->nullable(),
-                        Checkbox::make('featured')->default(true),
+                        Select::make('status')
+                        ->options(PostStatus::status)
+                        ->required(),
                         Select::make('user_id')
                             ->relationship('author', 'name')
                             ->searchable()
@@ -82,10 +86,12 @@ class PostResource extends Resource
             ->columns([
                 ImageColumn::make('image'),
                 TextColumn::make('title')->sortable()->searchable(),
-                TextColumn::make('slug')->sortable()->searchable(),
                 TextColumn::make('author.name')->sortable()->searchable(),
                 TextColumn::make('published_at')->date('Y-m-d')->sortable()->searchable(),
-                CheckboxColumn::make('featured'),
+                SelectColumn::make('status')
+                    ->options(PostStatus::status)
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -27,7 +27,7 @@ class Post extends Model
         'image',
         'content',
         'published_at',
-        'featured',
+        'status',
     ];
 
     protected $casts = [
@@ -59,7 +59,7 @@ class Post extends Model
 
     public function scopeFeatured($query)
     {
-        $query->where('featured', true);
+        $query->where('status', 'Published');
     }
 
     public function getExcerpt()

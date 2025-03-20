@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\CheckboxColumn;
 use App\Filament\Resources\MessageResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\MessageResource\RelationManagers;
@@ -22,7 +23,7 @@ class MessageResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        return static::getModel()::where('is_read', false)->count();   
     }
     public static function table(Table $table): Table
     {
@@ -34,7 +35,8 @@ class MessageResource extends Resource
                 TextColumn::make('message')->sortable()->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
+                    ->sortable(),
+                CheckboxColumn::make('is_read')->sortable()->label('Already Read')
             ])
             ->filters([
                 //
