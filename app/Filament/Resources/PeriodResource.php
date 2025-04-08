@@ -68,7 +68,7 @@ class PeriodResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('start')
+            ->defaultSort('end')
             ->filters([
                 //
             ])

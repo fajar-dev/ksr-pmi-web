@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Period;
+use App\Models\Position;
+use App\Models\Volunteer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,10 +17,21 @@ class Organizer extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'image',
-        'name',
-        'member_id',
-        'position',
-        'sort'
+        'volunteer_id',
+        'period_id',
+        'position_id',
     ];
+
+    public function volunteers()
+    {
+        return $this->belongsTo(Volunteer::class, 'volunteer_id');
+    }
+    public function positions()
+    {
+        return $this->belongsTo(Position::class, 'position_id');
+    }
+    public function periods()
+    {
+        return $this->belongsTo(Period::class, 'period_id');
+    }
 }
