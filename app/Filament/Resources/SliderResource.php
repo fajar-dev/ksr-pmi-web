@@ -10,16 +10,17 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\CheckboxColumn;
+use Filament\Tables\Columns\TextInputColumn;
 use App\Filament\Resources\SliderResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SliderResource\RelationManagers;
-use Filament\Tables\Columns\TextInputColumn;
 
 class SliderResource extends Resource
 {
@@ -37,18 +38,17 @@ class SliderResource extends Resource
         ->schema([
             Section::make('Main Content')->schema(
                 [
-                    FileUpload::make('image')->image()->directory('setting/sliders')->required(),
+                    FileUpload::make('image')->image()->directory('posts/slider')->label('Image (1920x800)')->required(),
                     TextInput::make('title')
                             ->required()
                             ->maxLength(255),
-                    TextInput::make('description')
+                    Textarea::make('description')
                             ->required()
                             ->maxLength(255),
-                    TextInput::make('order')
+                    TextInput::make('sort')
                             ->numeric()
                             ->default(1)
-                            ->required()
-                            ->label('Order'),
+                            ->required(),
                     Checkbox::make('featured')->default(true),
                 ]
             )->columns(1)
@@ -62,8 +62,7 @@ class SliderResource extends Resource
                 ImageColumn::make('image'),
                 TextColumn::make('title')->sortable()->searchable(),
                 TextColumn::make('description')->sortable()->searchable(),
-                TextInputColumn::make('order')
-                    ->label('Order')
+                TextInputColumn::make('sort')
                     ->sortable()
                     ->rules(['numeric', 'min:1']),
                 CheckboxColumn::make('featured'),
@@ -76,7 +75,7 @@ class SliderResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('order')
+            ->defaultSort('sort')
             ->filters([
                 //
             ])

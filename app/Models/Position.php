@@ -3,21 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Slider extends Model
+class Position extends Model
 {
-    use HasFactory;
-
     public $timestamps = true;
-    protected $table = 'sliders';
+    protected $table = 'positions';
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'image',
-        'title',
+        'name',
         'description',
-        'featured',
         'sort',
     ];
 }

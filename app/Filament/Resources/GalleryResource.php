@@ -32,7 +32,7 @@ class GalleryResource extends Resource
                 ->schema([
                     FileUpload::make('image')
                         ->image()
-                        ->directory('posts/galleries')
+                        ->directory('posts/gallery')
                         ->required(),
 
                     TextInput::make('title')

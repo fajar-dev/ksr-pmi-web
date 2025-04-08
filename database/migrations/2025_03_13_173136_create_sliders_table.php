@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->boolean('featured')->default(true);
-            $table->integer('order')->default(1);
+            $table->integer('sort')->default(1);
             $table->timestamps();
         });
     }

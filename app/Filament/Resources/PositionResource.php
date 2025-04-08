@@ -4,64 +4,56 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Position;
 use Filament\Forms\Form;
-use App\Models\Organizer;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextInputColumn;
-use App\Filament\Resources\OrganizerResource\Pages;
+use App\Filament\Resources\PositionResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\OrganizerResource\RelationManagers;
+use App\Filament\Resources\PositionResource\RelationManagers;
 
-class OrganizerResource extends Resource
+class PositionResource extends Resource
 {
-    protected static ?string $model = Organizer::class;
+    protected static ?string $model = Position::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
-
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    
     protected static ?string $navigationGroup = 'structures';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            Section::make('Main Content')->schema(
-                [
-                    FileUpload::make('image')->image()->directory('members/organizer'),
-                    TextInput::make('name')
+            ->schema([
+                Section::make('Main Content')->schema(
+                    [
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                    TextInput::make('member_id')
-                            ->required()
+                        Textarea::make('description')
                             ->maxLength(255),
-                    TextInput::make('position')
-                            ->required()
-                            ->maxLength(255),
-                    TextInput::make('sort')
+                        TextInput::make('sort')
                             ->numeric()
                             ->default(1)
                             ->required()
-                ]
-            )->columns(1)
-        ]);
+                    ]
+                )->columns(1),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('member_id')->label('Member ID')->sortable()->searchable(),
-                TextColumn::make('position')->sortable()->searchable(),
+                TextColumn::make('description')->sortable()->searchable(),
                 TextInputColumn::make('sort')
                     ->sortable()
                     ->rules(['numeric', 'min:1']),
@@ -97,9 +89,9 @@ class OrganizerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrganizers::route('/'),
-            'create' => Pages\CreateOrganizer::route('/create'),
-            'edit' => Pages\EditOrganizer::route('/{record}/edit'),
+            'index' => Pages\ListPositions::route('/'),
+            'create' => Pages\CreatePosition::route('/create'),
+            'edit' => Pages\EditPosition::route('/{record}/edit'),
         ];
     }
 }

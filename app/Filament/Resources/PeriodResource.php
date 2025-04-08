@@ -4,30 +4,33 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Period;
 use Filament\Forms\Form;
-use App\Models\Organizer;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Columns\TextInputColumn;
-use App\Filament\Resources\OrganizerResource\Pages;
+use App\Filament\Resources\PeriodResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\OrganizerResource\RelationManagers;
+use App\Filament\Resources\PeriodResource\RelationManagers;
 
-class OrganizerResource extends Resource
+class PeriodResource extends Resource
 {
-    protected static ?string $model = Organizer::class;
+    protected static ?string $model = Period::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar';
 
     protected static ?string $navigationGroup = 'structures';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -35,22 +38,16 @@ class OrganizerResource extends Resource
         ->schema([
             Section::make('Main Content')->schema(
                 [
-                    FileUpload::make('image')->image()->directory('members/organizer'),
                     TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                    TextInput::make('member_id')
-                            ->required()
-                            ->maxLength(255),
-                    TextInput::make('position')
-                            ->required()
-                            ->maxLength(255),
-                    TextInput::make('sort')
-                            ->numeric()
-                            ->default(1)
-                            ->required()
+                        ->required()
+                        ->maxLength(255),
+                    DatePicker::make('start')->required(),
+                    DatePicker::make('end')->required(),
+                    Textarea::make('description')
+                        ->maxLength(255),
+                    FileUpload::make('decree')->image()->directory('documents/decree')->acceptedFileTypes(['application/pdf']),
                 ]
-            )->columns(1)
+            )->columns(1),
         ]);
     }
 
@@ -58,13 +55,10 @@ class OrganizerResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('member_id')->label('Member ID')->sortable()->searchable(),
-                TextColumn::make('position')->sortable()->searchable(),
-                TextInputColumn::make('sort')
-                    ->sortable()
-                    ->rules(['numeric', 'min:1']),
+                TextColumn::make('start')->sortable()->searchable(),
+                TextColumn::make('end')->sortable()->searchable(),
+                TextColumn::make('description')->sortable()->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -74,10 +68,17 @@ class OrganizerResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('start')
             ->filters([
                 //
             ])
             ->actions([
+                Action::make('decree')
+                    ->label('View PDF')
+                    ->url(fn ($record) => asset('storage/' . $record->decree))
+                    ->icon('heroicon-o-eye') 
+                    ->openUrlInNewTab()
+                    ->visible(fn ($record) => !is_null($record->decree)),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -97,9 +98,9 @@ class OrganizerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrganizers::route('/'),
-            'create' => Pages\CreateOrganizer::route('/create'),
-            'edit' => Pages\EditOrganizer::route('/{record}/edit'),
+            'index' => Pages\ListPeriods::route('/'),
+            'create' => Pages\CreatePeriod::route('/create'),
+            'edit' => Pages\EditPeriod::route('/{record}/edit'),
         ];
     }
 }

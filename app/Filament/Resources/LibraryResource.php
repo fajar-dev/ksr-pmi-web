@@ -37,7 +37,7 @@ class LibraryResource extends Resource
                     ->required()
                     ->maxLength(255),
                     FileUpload::make('file')
-                        ->directory('posts/documents') // Simpan di folder khusus PDF
+                        ->directory('documents/library') // Simpan di folder khusus PDF
                         ->acceptedFileTypes(['application/pdf']) // Hanya menerima PDF
                         ->required(),
                     DateTimePicker::make('published_at')->nullable(),
@@ -70,6 +70,12 @@ class LibraryResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('File')
+                    ->label('View File')
+                    ->url(fn ($record) => asset('storage/' . $record->file))
+                    ->icon('heroicon-o-eye') 
+                    ->openUrlInNewTab()
+                    ->visible(fn ($record) => !is_null($record->file)),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

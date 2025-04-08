@@ -17,46 +17,26 @@
       </div>
     </div>
     <div class="hero-slider slider-arrow slider-arrow-01">
-      <div class="single-slider slider-height slider-circle" style="background: url('{{ asset('assets/img/slider/red-slider-bg.jpg') }}');">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-8 col-lg-8 col-md-9 pr-0">
-              <div class="slider-description pt-185 pb-190">
+      @foreach ($slider as $item)  
+        <div class="single-slider slider-height slider-circle" style="background: url('{{ Storage::url($item->image) }}');">
+          <div class="container">
+            <div class="row">
+              <div class="col-xl-8 col-lg-8 col-md-9 pr-0">
+                <div class="slider-description pt-185 pb-190">
 
-                <div class="slider-text">
-                  <div class="line ml-10 bg-dark"></div>
-                  <span data-animation="fadeInLeft" data-delay=".5s">Business Goals Need Attention</span>
-                  <h1 class="mt-15 " data-animation="fadeInLeft" data-delay="1s">
-                    Business Ideas <br>
-                    And The Passionate <br>
-                    People Behind.
-                  </h1>
+                  <div class="slider-text">
+                    <div class="line ml-10 bg-dark"></div>
+                    <span data-animation="fadeInLeft" data-delay=".5s">{{ $item->title }}</span>
+                    <h1 class="mt-15 " data-animation="fadeInLeft" data-delay="1s">
+                      {{ $item->description }}
+                    </h1>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="single-slider slider-height slider-circle" style="background: url('{{ asset('assets/img/slider/red-slider-bg-2.jpg') }}');">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-8  col-lg-8 col-md-8 pr-0">
-              <div class="slider-description pt-185 pb-190">
-
-                <div class="slider-text">
-                  <div class="line ml-10"></div>
-                  <span data-animation="fadeInLeft" data-delay=".5s">Business Goals Need Attention</span>
-                  <h1 class="mt-15 " data-animation="fadeInLeft" data-delay="1s">
-                    Business Ideas <br>
-                    And The Passionate <br>
-                    People Behind.
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      @endforeach
     </div>
   </div>
 
@@ -130,10 +110,10 @@
     <div class="about-information">
       <div class="container">
         <div class="row ">
-            <div class="col-xl-6 col-lg-6">
+            <div class="col-xl-6 col-lg-6 col-12">
             <div class="about-2-images">
               <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="col-6">
                   <div class="about-2-img mb-30">
                     <img class="img-fluid" src="{{ asset('assets/img/team/about-2-1.jpg') }}" alt="about person">
                   </div>
@@ -142,7 +122,7 @@
                   </div>
                 </div>
   
-                <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="col-6">
                   <div class="about-2-img mb-30 mt-30">
                     <img class="img-fluid" src="{{ asset('assets/img/team/about-2-2.jpg') }}" alt="about person">
                   </div>
@@ -373,7 +353,7 @@
               </h2>
             </div>
             <div class="col-md-4">
-              <div class="join-button float-lg-right mt-100 mr-100 text-dark">
+              <div class="join-button float-lg-right mt-lg-100 mt-xl-100 mt-md-50 mt-5 mr-100 text-dark">
                 <a href="contact.html" class="text-dark">Apply Today</a>
               </div>
             </div>

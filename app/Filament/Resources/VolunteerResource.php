@@ -37,7 +37,7 @@ class VolunteerResource extends Resource
                 ->schema([
                     FileUpload::make('image')
                         ->image()
-                        ->directory('member/volunteers')
+                        ->directory('members/volunteer')
                         ->required(),
 
                     TextInput::make('name')
@@ -162,6 +162,17 @@ class VolunteerResource extends Resource
                 SelectFilter::make('blood_type')
                     ->options(BloodType::type)
                     ->label('Blood Type'),
+                SelectFilter::make('name')
+                    ->options([
+                        'draft' => 'Draft',
+                        'reviewing' => 'Reviewing',
+                        'published' => 'Published',
+                    ])
+                    ->default('draft')
+                    ->selectablePlaceholder(false)
+
+
+                    // ->withoutAllOption()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
