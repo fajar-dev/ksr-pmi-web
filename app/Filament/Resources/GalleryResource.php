@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
@@ -38,6 +39,7 @@ class GalleryResource extends Resource
                     TextInput::make('title')
                         ->required()
                         ->maxLength(255),
+                    Textarea::make('description')->maxLength(255),
                 ])
                 ->columns(1)
         ]);
@@ -51,6 +53,7 @@ class GalleryResource extends Resource
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('description')->sortable()->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

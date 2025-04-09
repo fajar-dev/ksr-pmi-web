@@ -37,7 +37,7 @@ class LibraryResource extends Resource
                     TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                    Textarea::make('description')->maxLength(255)->required(),
+                    Textarea::make('description')->maxLength(255),
                     FileUpload::make('file')
                         ->directory('documents/library') // Simpan di folder khusus PDF
                         ->acceptedFileTypes(['application/pdf']) // Hanya menerima PDF
