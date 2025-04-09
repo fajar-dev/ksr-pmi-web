@@ -85,6 +85,10 @@ class OrganizerResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+                ->defaultSort(function ($query) {
+                    $query->join('positions', 'positions.id', '=', 'organizers.position_id')
+                        ->orderBy('positions.sort');
+                })
             ->filters([
                 SelectFilter::make('period_id')
                     ->options(Period::all()->mapWithKeys(function ($period) {

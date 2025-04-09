@@ -14,7 +14,9 @@ class Library extends Model
     protected $fillable = [
         'user_id',
         'title',
+        'description',
         'file',
+        'download_count',
         'published_at',
     ];
 

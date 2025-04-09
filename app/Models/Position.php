@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Organizer;
 use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
@@ -15,4 +16,9 @@ class Position extends Model
         'description',
         'sort',
     ];
+
+    public function position()
+    {
+        return $this->hasMany(Organizer::class);
+    }
 }

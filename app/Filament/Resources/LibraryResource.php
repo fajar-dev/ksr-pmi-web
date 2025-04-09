@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
@@ -36,6 +37,7 @@ class LibraryResource extends Resource
                     TextInput::make('title')
                     ->required()
                     ->maxLength(255),
+                    Textarea::make('description')->maxLength(255)->required(),
                     FileUpload::make('file')
                         ->directory('documents/library') // Simpan di folder khusus PDF
                         ->acceptedFileTypes(['application/pdf']) // Hanya menerima PDF
@@ -55,8 +57,10 @@ class LibraryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')->sortable()->searchable(),
+                TextColumn::make('description')->sortable()->searchable(),
                 TextColumn::make('author.name')->sortable()->searchable(),
                 TextColumn::make('published_at')->date('Y-m-d')->sortable()->searchable(),
+                TextColumn::make('download_count')->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

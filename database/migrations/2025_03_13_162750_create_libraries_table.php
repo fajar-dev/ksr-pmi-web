@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->string('file');
             $table->string('title');
+            $table->text('description')->nullable();
             $table->timestamp('published_at')->nullable();
+            $table->integer('download_count')->default(0);
             $table->timestamps();
         });
     }
