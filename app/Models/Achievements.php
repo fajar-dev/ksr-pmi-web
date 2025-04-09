@@ -16,6 +16,7 @@ class Achievements extends Model
     protected $fillable = [
         'title',
         'institution',
+        'description',
         'date',
     ];
 }

@@ -9,6 +9,7 @@ use Filament\Tables\Table;
 use App\Models\Achievements;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
@@ -35,6 +36,7 @@ class AchievementsResource extends Resource
                     TextInput::make('institution')
                         ->required()
                         ->maxLength(255),
+                    Textarea::make('description')->maxLength(255),
                     DatePicker::make('date')
                         ->required(),
                 ]
@@ -48,6 +50,7 @@ class AchievementsResource extends Resource
             ->columns([
                 TextColumn::make('title')->sortable()->searchable(),
                 TextColumn::make('institution')->sortable()->searchable(),
+                TextColumn::make('description')->sortable()->searchable(),
                 TextColumn::make('date')->date('Y-m-d')->sortable()->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
