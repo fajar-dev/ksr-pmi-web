@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+use Filament\Forms\Components\Select;
 
 class UserResource extends Resource
 {
@@ -43,7 +44,14 @@ class UserResource extends Resource
                         TextInput::make('password')
                             ->password()
                             ->revealable()
-                            ->required()
+                            ->required(),
+                        Select::make('roles')
+                            ->label('Role')
+                            ->multiple() // jika user bisa punya lebih dari 1 role
+                            ->relationship('roles', 'name') // relasi spatie
+                            ->preload()
+                            ->searchable()
+                            ->required(),
                     ]
                 )->columns(1),
             ]);
