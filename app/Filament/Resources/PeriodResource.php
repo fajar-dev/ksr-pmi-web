@@ -28,7 +28,7 @@ class PeriodResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
 
-    protected static ?string $navigationGroup = 'structures';
+    protected static ?string $navigationGroup = 'Structures';
 
     protected static ?int $navigationSort = 2;
 

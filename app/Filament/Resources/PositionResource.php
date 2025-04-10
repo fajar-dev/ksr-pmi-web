@@ -24,7 +24,7 @@ class PositionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
     
-    protected static ?string $navigationGroup = 'structures';
+    protected static ?string $navigationGroup = 'Structures';
 
     protected static ?int $navigationSort = 1;
 

@@ -29,7 +29,7 @@ class OrganizerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationGroup = 'structures';
+    protected static ?string $navigationGroup = 'Structures';
 
     protected static ?int $navigationSort = 3;
 
