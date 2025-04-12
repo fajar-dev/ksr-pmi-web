@@ -6,24 +6,54 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
+    protected $resources = [
+        'user',
+        'role',
+        'post',
+        'category',
+        'message',
+        'library',
+        'organizer',
+        'period',
+        'position',
+        'volunteer',
+        'slider',
+        'gallery',
+        'achievements',
+    ];
+
+    protected $permissions = [
+        'view',
+        'view_any',
+        'create',
+        'update',
+        'delete',
+        'delete_any',
+        'restore',
+        'restore_any',
+        'replicate',
+        'reorder',
+        'force_delete',
+        'force_delete_any',
+    ];
+
     public function run(): void
     {
-        // Buat role super_admin jika belum ada
-        $superAdminRole = Role::firstOrCreate(['name' => 'super_admin']);
+        $superAdmin = Role::firstOrCreate(['name' => 'super_admin']);
 
-        // Buat user admin
-        $admin = User::firstOrCreate([
-            'email' => 'admin@example.com',
-        ], [
-            'name' => 'Super Admin',
-            'password' => Hash::make('password'), // ganti password sesuai kebutuhan
-        ]);
+        foreach ($this->resources as $resource) {
+            foreach ($this->permissions as $permission) {
+                $permName = "{$permission}_{$resource}";
+                Permission::firstOrCreate(['name' => $permName]);
+                $superAdmin->givePermissionTo($permName);
+            }
+        }
 
-        // Beri role super_admin ke user
-        $admin->assignRole($superAdminRole);
+        $this->command->info('✅ Permissions created and assigned to super_admin.');
     }
 }
